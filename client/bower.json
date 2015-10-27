@@ -1,0 +1,28 @@
+{
+  "name": "public",
+  "homepage": "https://github.com/Sharp-Frost/Domodi",
+  "authors": [
+    "Sh4rp Fro5t <sh4rp.fro5t@gmail.com>"
+  ],
+  "description": "no description yet",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.4.7",
+    "bootstrap": "~3.3.5",
+    "angular-animate": "~1.4.7",
+    "angular-cookies": "~1.4.7",
+    "angular-resource": "~1.4.7",
+    "angular-route": "~1.4.7",
+    "angular-sanitize": "~1.4.7",
+    "angular-touch": "~1.4.7"
+  }
+}

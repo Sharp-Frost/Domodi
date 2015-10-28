@@ -6,12 +6,12 @@
 
 angular.module('DomodiApp.services', []).
   
-factory('configAPIservice', function($http) {
-    var configAPI = {};
+factory('domodiAPIservice', function($http) {
+    var domodiAPI = {};
     
-    //configAPI.getSocles = function() {
-    //	return $http.post('http://localhost/~Simon/GigondasDNA/cgi-bin/configDNA.cgi', '{"action": "getSocle"}' );	
-    //};
+    domodiAPI.getHello = function() {
+    	return $http.get('http://localhost:8080/api', '' );	
+    };
     
-    return configAPI;
+    return domodiAPI;
   });

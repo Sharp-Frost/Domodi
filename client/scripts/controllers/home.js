@@ -2,13 +2,13 @@
 
 /**
  * @ngdoc function
- * @name gigondasDnav2App.controller:MainCtrl
+ * @name Domodi.controller:HomeCtrl
  * @description
- * # MainCtrl
- * Controller of the gigondasDnav2App
+ * # HomeCtrl
+ * Controller of the Home page of Domodi
  */
 angular.module('DomodiApp').controller('HomeCtrl', function ($scope, domodiAPIservice) {
-    $scope.nodeHello = "Hello from NOT nodeJs"
+    $scope.profileModel= {radio : ""};
 
     domodiAPIservice.getHello().then(function successCallback(response) {
     	$scope.nodeHello = response.data.message;

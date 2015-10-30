@@ -1,12 +1,19 @@
 <div class="jumbotron">
-  <h1>Domodi Home</h1>
+    <h1>Domodi Home</h1>
+    <h3>{{nodeHello}}</h3>
 </div>
 
-<label> Message du server nodeJs : {{nodeHello}} </label>
 
-<select class="form-control" ng-model="profiles" ng-options="profile.name for profile in profiles track by profile.name" required>
-</select>
+<div class="btn-group">
+    <h2> Select profile : </h2>
+    <label ng-repeat="profile in profiles" class="btn btn-primary" ng-model="profileModel.radio"
+           uib-btn-radio="'{{profile.name}}'">{{profile.name}}</label>
+</div>
 
+<div>
+    <h2>Liste des équipements : </h2>
 
-<h2>Liste des équipements : </h2>
-<div ng-repeat="device in devices"> <h3>{{device.name}} </h3>  <b> type: </b>  {{device.type}}  <b>location: </b> {{device.location}}	</div>
+    <div ng-repeat="device in devices"><h3>{{device.name}} </h3>  <b> type: </b> {{device.type}} <b>location: </b>
+        {{device.location}}
+    </div>
+</div>

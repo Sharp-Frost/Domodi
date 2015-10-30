@@ -10,6 +10,7 @@
  */
 angular
   .module('DomodiApp', [
+    'ui.bootstrap',
 	'DomodiApp.services',
     'ngAnimate',
     'ngCookies',

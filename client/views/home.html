@@ -3,5 +3,7 @@
 
   <label> Message du server nodeJs : {{nodeHello}} </label>
 
+  <h2>Liste des équipements : </h2>
+  <div ng-repeat="device in devices"> <h3>{{device.name}} </h3>  <b> type: </b>  {{device.type}}  <b>location: </b> {{device.location}}	</div>
 
 </div>

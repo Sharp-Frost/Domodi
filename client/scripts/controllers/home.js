@@ -16,4 +16,12 @@ angular.module('DomodiApp').controller('HomeCtrl', function ($scope, domodiAPIse
     	$scope.nodeHello = "An error occured " + response;
     });
 
+
+    domodiAPIservice.getDevices().then(function successCallback(response) {
+    	$scope.devices = response.data;
+    }, function errorCallback(response) {
+    	$scope.errors = "An error occured while getting devices : " + response;
+    });
+
+
   });

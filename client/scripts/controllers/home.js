@@ -13,7 +13,7 @@ angular.module('DomodiApp').controller('HomeCtrl', function ($scope, domodiAPIse
     domodiAPIservice.getHello().then(function successCallback(response) {
     	$scope.nodeHello = response.data.message;
     }, function errorCallback(response) {
-    	$scope.nodeHello = "An error occured " + response;
+    	$scope.nodeHello = "An error occured while getting alive message : " + response;
     });
 
 
@@ -21,6 +21,13 @@ angular.module('DomodiApp').controller('HomeCtrl', function ($scope, domodiAPIse
     	$scope.devices = response.data;
     }, function errorCallback(response) {
     	$scope.errors = "An error occured while getting devices : " + response;
+    });
+
+
+    domodiAPIservice.getProfiles().then(function successCallback(response) {
+        $scope.profiles = response.data;
+    }, function errorCallback(response) {
+        $scope.errors = "An error occured while getting profiles : " + response;
     });
 
 

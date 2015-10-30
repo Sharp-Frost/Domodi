@@ -5,7 +5,7 @@ module.exports = (function() {
     var api = express.Router();
 
     api.get('/', function(req, res) {
-        res.send('Domodi API is alive !');
+        res.send({message: "Domodi API is alive !"} );
     });
 
     return api;

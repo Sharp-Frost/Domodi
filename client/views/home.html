@@ -1,9 +1,12 @@
 <div class="jumbotron">
   <h1>Domodi Home</h1>
-
-  <label> Message du server nodeJs : {{nodeHello}} </label>
-
-  <h2>Liste des équipements : </h2>
-  <div ng-repeat="device in devices"> <h3>{{device.name}} </h3>  <b> type: </b>  {{device.type}}  <b>location: </b> {{device.location}}	</div>
-
 </div>
+
+<label> Message du server nodeJs : {{nodeHello}} </label>
+
+<select class="form-control" ng-model="profiles" ng-options="profile.name for profile in profiles track by profile.name" required>
+</select>
+
+
+<h2>Liste des équipements : </h2>
+<div ng-repeat="device in devices"> <h3>{{device.name}} </h3>  <b> type: </b>  {{device.type}}  <b>location: </b> {{device.location}}	</div>

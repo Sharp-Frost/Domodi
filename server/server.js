@@ -34,9 +34,11 @@ mongoose.connect('mongodb://localhost:27017/Domodi');
 // ROUTES FOR OUR API
 // =============================================================================
 var api = require('./app/routes/routes');
-var deviceApi = require('./app/routes/devices');
+var devicesRouter = require('./app/routes/devicesRouter');
+var profilesRouter = require('./app/routes/profilesRouter');
 app.use('/domodi', api);
-app.use('/domodi', deviceApi);
+app.use('/domodi', devicesRouter);
+app.use('/domodi', profilesRouter);
 
 
 // START THE SERVER

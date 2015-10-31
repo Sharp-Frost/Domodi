@@ -22,6 +22,10 @@ angular.module('DomodiApp.services', []).
             return $http.get(host + '/profiles', '');
         };
 
+        domodiAPI.activateProfile = function (id) {
+          return $http.post(host + '/profiles/' + id + '/activate' );
+        };
+
 
         return domodiAPI;
     });

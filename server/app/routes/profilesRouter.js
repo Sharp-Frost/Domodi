@@ -40,7 +40,7 @@ module.exports = (function () {
             Profile.findById(req.params.id, function (err, profile) {
                 if (err)
                     res.send(err);
-                res.json(profile);
+
             });
         })
 
@@ -50,8 +50,6 @@ module.exports = (function () {
             Profile.findById(req.params.id, function (err, profile) {
                 if (err)
                     res.send(err);
-
-                //Update active state
                 if(req.body.active != undefined ) {
                     profile.active = req.body.active;
                 }
@@ -61,6 +59,9 @@ module.exports = (function () {
                 if(req.body.description != undefined ) {
                     profile.description = req.body.description;
                 }
+                if(req.body.delay != undefined) {
+                    profile.delay = req.body.delay;
+                }
 
                 // save
                 profile.save(function (err) {
@@ -69,7 +70,50 @@ module.exports = (function () {
                     res.json({message: 'Profile with id=' + req.params.id + ' updated'});
                 });
             });
+        });
+
+    router.route('/profiles/:id/activate')
+        .post(function (req, res) {
+            // Get profile to activate and read it's delay
+            Profile.findById(req.params.id, function (err, profile) {
+                if(profile.delay != undefined && profile.delay > 0) {
+                    console.log("Waiting " + profile.delay + " milliseconds before changing profile");
+                    setTimeout( function() {
+                        activate(profile._id);
+                    } , profile.delay ); //Delaying activation in milliseconds
+                } else {
+                    activate(profile._id);
+                }
+                res.json(profile);
+            });
+        });
+
+
+    function activate(id) {
+        // Deactivate all others
+        console.log("Deactivating all other profile");
+        Profile.find({'active': true}, function(err, profiles) {
+           if (err) {
+               console.log("An error occured");
+           } else {
+               profiles.forEach(function(profile) {
+                   profile.active=false;
+                   profile.save();
+               });
+           }
+        }).then(function() {
+            // Activate profile
+            console.log("Activating profile " + id);
+            Profile.findById(id, function(err,profile) {
+                profile.active=true;
+                profile.save();
+            });
+
         })
+
+
+
+    }
 
     return router;
 })();

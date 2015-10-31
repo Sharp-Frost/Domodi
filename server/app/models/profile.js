@@ -5,7 +5,8 @@ var Schema       = mongoose.Schema;
 var ProfileSchema   = new Schema({
     name: String,
     description: String,
-    active: Boolean
+    active: Boolean,
+    delay: Number
 });
 
 

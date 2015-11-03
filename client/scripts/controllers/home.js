@@ -55,12 +55,15 @@ angular.module('DomodiApp').controller('HomeCtrl', function ($scope, domodiAPIse
     // =====================================================================
 
     $scope.changeProfile = function () {
+        $("#profileSpinner").show(); //Show the spinner during action
+
         domodiAPIservice.activateProfile($scope.profileModel.selected).then(function successCallback(response) {
             console.log("Profile changed to " + $scope.profileModel.selected);
-
+            $("#profileSpinner").hide(); //Hide the spinner during action
             //TODO : Notify the delay of profile changing to user
 
         }, function errorCallback(response) {
+            $("#profileSpinner").hide(); //Hide the spinner during action
             $scope.errors = "An error occured while getting profiles : " + response;
         })
     };

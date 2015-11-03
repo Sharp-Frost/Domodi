@@ -10,6 +10,7 @@
     <label ng-repeat="profile in profiles" ng-change="changeProfile()" class="btn btn-primary"
            ng-model="profileModel.selected"
            uib-btn-radio="'{{profile._id}}'">{{profile.name}}</label>
+    <img id="profileSpinner" src="/images/spinner-64.gif"  style="width:50px;height:50px;display:none;" alt="Change in progress">
 </div>
 
 <div>
@@ -18,6 +19,8 @@
     <div ng-repeat="device in devices"><h3>{{device.name}} </h3>  <b> type: </b> {{device.type}} <b>location: </b>
         {{device.location}}
     </div>
+
+
 </div>
 
 

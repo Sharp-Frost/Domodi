@@ -41,8 +41,30 @@ app.use('/domodi', devicesRouter);
 app.use('/domodi', profilesRouter);
 
 
+
+// SOCKET IO
+// =============================================================================
+var http = require('http').Server(app);
+var io = require('socket.io').listen(http);
+
+
+io.on('connection', function(socket){
+    console.log("a user connected to websocket");
+
+    //Send datetime every seconds
+    setInterval(function() {
+        var date = new Date().toTimeString();
+        socket.emit("date", {msg:date});
+    } , 1000);
+
+    socket.on('disconnect', function(){
+        console.log('user disconnected');
+    });
+});
+
+
 // START THE SERVER
 // =============================================================================
-app.listen(port);
 console.log('Node server started on port ' + port);
+http.listen(port);
 module.exports = app;

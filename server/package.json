@@ -1,9 +1,10 @@
 {
-    "name": "domodi-api",
-    "main": "server.js",
-    "dependencies": {
-        "express": "~4.0.0",
-        "mongoose": "~4.2.3",
-        "body-parser": "~1.0.1"
-    }
+  "name": "domodi-api",
+  "main": "server.js",
+  "dependencies": {
+    "body-parser": "~1.0.1",
+    "express": "~4.0.0",
+    "mongoose": "~4.2.3",
+    "socket.io": "^1.3.7"
+  }
 }

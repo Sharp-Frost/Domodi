@@ -23,7 +23,7 @@ angular
   .config(function ($routeProvider) {
     $routeProvider
 
-      .when('/home', {
+      .when('/', {
         templateUrl: 'views/home.html',
         controller: 'HomeCtrl'
       })     
@@ -32,6 +32,6 @@ angular
         controller: 'SettingsCtrl'
       }) 
       .otherwise({
-        redirectTo: '/home'
+        redirectTo: '/'
       });
   });

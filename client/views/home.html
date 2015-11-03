@@ -9,11 +9,13 @@
 
 <div>
     <h2>Alerts <span class="badge">42</span></h2>
+    <p>Display alerts raised by the system</p>
 </div>
 
 
 <div>
     <h2>Profile</h2>
+    <p>You can change the active profile here. A delay before change take effect can be applied.</p>
 
     <div class="btn-group">
         <label ng-repeat="profile in profiles" ng-change="changeProfile()" class="btn btn-default"
@@ -27,21 +29,23 @@
 
 <div>
     <h2>Devices</h2>
-
-    <div class="list-group" >
+    <p>List of your devices.</p>
+    <div class="list-group">
         <a class="list-group-item" ng-repeat="device in devices">
             <h3 class="list-group-item-heading">{{device.name}}</h3>
+
             <p class="list-group-item-text">type: {{device.type}} </p>
-            <p  class="list-group-item-text">location: {{device.location}} </p>
+
+            <p class="list-group-item-text">location: {{device.location}} </p>
         </a>
     </div>
 
 
-        <!--   <div ng-repeat="device in devices">{{device.name}} <b> type: </b> {{device.type}} <b>location: </b>
-              {{device.location}}
-          </div> -->
-  </div>
+    <!--   <div ng-repeat="device in devices">{{device.name}} <b> type: </b> {{device.type}} <b>location: </b>
+          {{device.location}}
+      </div> -->
+</div>
 
 
-  <!-- Display camera image streaming-->
+<!-- Display camera image streaming-->
 <!-- <img src="http://192.168.1.37/img/video.mjpeg"/> -->

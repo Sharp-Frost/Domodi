@@ -4,6 +4,8 @@
  *
  */
 angular.module('DomodiApp')
+
+    //TODO : See if directives can be exported in another file to be reused everywhere else
     .directive('clockpicker', ['$timeout', '$parse', function ($timeout, $parse) {
         return {
             restrict: 'C',
@@ -67,7 +69,7 @@ angular.module('DomodiApp')
                 {id: '5', name: 'Friday'},
                 {id: '6', name: 'Saturday'},
                 {id: '7', name: 'Sunday'},
-            ],
+            ]
         };
 
 

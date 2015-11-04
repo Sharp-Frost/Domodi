@@ -102,7 +102,7 @@ module.exports = (function () {
      * @apiSuccessExample Success-Response:
      *     HTTP/1.1 200 OK
      *     {
-     *      TODO
+     *      TODO : give a concrete example here
      *     }
      */
     router.route('/profiles/:id/activate')

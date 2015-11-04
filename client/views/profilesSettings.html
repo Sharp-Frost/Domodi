@@ -1,0 +1,111 @@
+<!-- OLD FORM -->
+<h3>Profiles settings</h3>
+<form name="profilesForm" class="form-horizontal" role="form" novalidate>
+    <div ng-repeat="profile in profiles">
+
+        <legend>{{profile.name}}</legend>
+
+        <div class="form-group">
+            <label class="col-md-2 control-label">Description</label>
+
+            <div class="col-md-10">
+                <input type="text" name="description{{profile.name}}"
+                       class="col-md-12"
+                       ng-maxlength="140"
+                       ng-model="profile.description"
+                       required>
+                <span style="color:red"
+                      ng-show="profilesForm.description{{profile.name}}.$touched && profilesForm.description{{profile.name}}.$invalid">invalid</span>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label class="col-md-2 control-label">Delay in milliseconds</label>
+
+            <div class="col-md-2">
+                <input type="number" name="delay{{profile.name}}"
+                       min="0"
+                       max="3600000"
+                       step="1000"
+                       ng-model="profile.delay"
+                       required>
+                <span style="color:red"
+                      ng-show="profilesForm.delay{{profile.name}}.$touched && profilesForm.delay{{profile.name}}.$invalid">invalid</span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-2 control-label">Planning</label>
+
+            <div class="col-md-10">
+                <ul class="list-group">
+
+                    <li class="list-group-item" ng-repeat="schedule in profile.planning">
+                        Activate every <b>{{daysOfweek.availableOptions[schedule.day].name}}</b> at <b>{{schedule.time}}</b>
+                        <button type="button" class="btn-xs btn-danger pull-right">
+                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                            Delete
+                        </button>
+                    </li>
+
+
+                    <li class="list-group-item">
+                        Activate every <b>Tuesday</b> at <b>23:30</b>
+                        <button type="button" class="btn-xs btn-danger pull-right">
+                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                            Delete
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label class="col-md-2 control-label">New schedule</label>
+
+            <div class="col-md-10">
+                <div class="form-group row">
+                    <label for="selectDay" class="col-md-1 control-label">every</label>
+
+                    <div class="col-md-2">
+                        <select id="selectDay" style="width:auto;" class="form-control selectWidth" ng-model="daysOfweek.selected[profile.name]">
+                            <option ng-repeat="option in daysOfweek.availableOptions" value="{{option.id}}">{{option.name}}</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-2">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="22:30" aria-describedby="basic-addon2" ng-model="time[profile.name]">
+                            <span class="input-group-addon glyphicon glyphicon-time" id="basic-addon2"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-2">
+                        <button type="button" class="btn-sm btn-success" ng-click="addSchedule(profile,daysOfweek.selected[profile.name],time[profile.name])">
+                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                            Add
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </div>
+    <!-- ngMessages goes here -->
+
+    <div class="row">
+        <button type="submit" class="btn btn-warning" ng-click="save()"
+                ng-disabled="profilesForm.$invalid">
+            Cancel
+        </button>
+        <button type="submit" class="btn btn-success" ng-click="save()"
+                ng-disabled="profilesForm.$invalid">
+            Save
+        </button>
+    </div>
+</form>
+
+

@@ -2,16 +2,16 @@
 // =============================================================================
 
 // call the packages we need
-var express    = require('express');        // call express
-var app        = express();                 // define our app using express
+var express = require('express');        // call express
+var app = express();                 // define our app using express
 var bodyParser = require('body-parser');
-var mongoose   = require('mongoose');
+var mongoose = require('mongoose');
 // set our port
 var port = process.env.PORT || 8080;
 
 
 // configure app to use bodyParser() this will let us get the data from a POST
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
 
@@ -41,23 +41,21 @@ app.use('/domodi', devicesRouter);
 app.use('/domodi', profilesRouter);
 
 
-
 // SOCKET IO
 // =============================================================================
 var http = require('http').Server(app);
 var io = require('socket.io').listen(http);
 
 
-io.on('connection', function(socket){
+io.on('connection', function (socket) {
     console.log("a user connected to websocket");
 
-    //Send datetime every seconds
-    setInterval(function() {
-        var date = new Date().toTimeString();
-        socket.emit("date", {msg:date});
-    } , 1000);
+    //Send datetime
+    var date = new Date().toTimeString();
+    socket.emit("date", {msg: date});
 
-    socket.on('disconnect', function(){
+
+    socket.on('disconnect', function () {
         console.log('user disconnected');
     });
 });

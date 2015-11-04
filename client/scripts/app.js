@@ -27,9 +27,9 @@ angular
         templateUrl: 'views/home.html',
         controller: 'HomeCtrl'
       })     
-      .when('/settings', {
-        templateUrl: 'views/settings.html',
-        controller: 'SettingsCtrl'
+      .when('/profilesSettings', {
+        templateUrl: 'views/profilesSettings.html',
+        controller: 'ProfilesSettingsCtrl'
       }) 
       .otherwise({
         redirectTo: '/'

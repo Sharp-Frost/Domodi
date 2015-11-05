@@ -36,14 +36,21 @@
         </div>
 
         <div class="form-group">
+            <label class="col-md-2 control-label">Not affected by schedule</label>
+            <div class="col-md-8">
+                <input type="checkbox" disabled="true" ng-model="profile.unchangeable">
+                <p>If checked this profile can't be changed by other profile's schedule. For example : when on holidays the profile won't change to night or home.</p>
+            </div>
+        </div>
+
+        <div class="form-group">
             <label class="col-md-2 control-label">Planning</label>
 
             <div class="col-md-6">
                 <ul class="list-group">
-
                     <li class="list-group-item" ng-repeat="schedule in profile.planning">
                         Activate every <b>{{daysOfweek.availableOptions[schedule.day].name}}</b> at
-                        <b>{{schedule.time}}</b>
+                        <b>{{schedule.hours}}:{{schedule.minutes}}</b>  <!-- TODO : format hours and minute with 2 digits-->
                         <button type="button" class="btn-xs btn-danger pull-right" ng-click="profile.planning.splice(profile.planning.indexOf(schedule),1)">
                             <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                             Delete
@@ -72,7 +79,7 @@
 
                     <div class="col-md-2">
                         <div class="input-group clockpicker" ng-model="time[profile.name]">
-                            <input type="text" class="form-control" value="09:30">
+                            <input type="text" class="form-control" placeholder="15:30">
                                 <span class="input-group-addon">
                                     <span class="glyphicon glyphicon-time"></span>
                                 </span>
@@ -95,12 +102,10 @@
     <!-- ngMessages goes here -->
 
     <div class="row">
-        <button type="submit" class="btn btn-warning" ng-click="save()"
-                ng-disabled="profilesForm.$invalid">
+        <button type="submit" class="btn btn-warning" ng-click="cancel()" ng-disabled="profilesForm.$invalid">
             Cancel
         </button>
-        <button type="submit" class="btn btn-success" ng-click="save()"
-                ng-disabled="profilesForm.$invalid">
+        <button type="submit" class="btn btn-success" ng-click="save()"  ng-disabled="profilesForm.$invalid">
             Save
         </button>
     </div>

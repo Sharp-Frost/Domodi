@@ -14,6 +14,7 @@ angular.module('DomodiApp')
                 var inputElm = $('input', elm);
                 var modelGetter = $parse(attrs['ngModel']);
                 var modelSetter = modelGetter.assign;
+
                 function afterUpdate() {
                     return $timeout(function () {
                         var value = modelGetter(scope);
@@ -35,6 +36,7 @@ angular.module('DomodiApp')
                         }
                     })
                 }
+
                 elm.clockpicker({
                     donetext: 'Done',
                     autoclose: true,
@@ -50,8 +52,6 @@ angular.module('DomodiApp')
             }
         }
     }])
-
-
 
 
     .controller('ProfilesSettingsCtrl', function ($scope, domodiAPIservice) {
@@ -96,12 +96,33 @@ angular.module('DomodiApp')
 
         // Add a schedule to a profile
         $scope.addSchedule = function (profile, day, time) {
-            console.log('Day '+ day + ' time ' + time);
-            if(profile.planning === undefined) {
+            console.log('Day ' + day + ' time ' + time);
+            if (profile.planning === undefined) {
                 profile.planning = new Array();
             }
-            profile.planning.push({day:day, time:time});
+            //Special case for every days
+            if(day == 0) {
+                for (var i=1; i<=7; i++) {
+                    profile.planning.push({day: i, hours: time.getHours(), minutes: time.getMinutes()});
+                }
+            } else {
+                profile.planning.push({day: Number(day), hours: time.getHours(), minutes: time.getMinutes()});
+            }
+        }
 
-            console.log("hash as object" + $scope.daysOfweek.availableOptions[5].name);
+        //Save modifications
+        $scope.save = function () {
+            domodiAPIservice.updateProfiles($scope.profiles).
+                then(function successCallback(response) {
+                    console.log("profiles saved");
+                    $scope.originalProfiles = angular.copy(response.data);
+                }, function errorCallback(response) {
+                    console.log("An error occured while getting profiles : " + response);
+                });
+        }
+
+        //Cancel modifications
+        $scope.cancel = function () {
+            $scope.profiles = angular.copy($scope.originalProfiles);
         }
     });

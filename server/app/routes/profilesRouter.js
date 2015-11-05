@@ -5,7 +5,6 @@ module.exports = (function () {
     var router = express.Router();
     var Profile = require('../models/profile');
 
-
     //Define routes here :
     //--------------------------------------------------------------------
 
@@ -41,6 +40,7 @@ module.exports = (function () {
             profile.name = req.body.name;    // set the device name (comes from the request)
             profile.description = req.body.description;
             profile.active = false;
+            profile.unchangeable = req.body.unchangeable || false;
 
             // save and check for errors
             profile.save(function (err) {
@@ -48,6 +48,32 @@ module.exports = (function () {
                     res.send(err);
                 res.json({message: 'Profile ' + profile.name + ' created. Description : ' + profile.description + ' created'});
             });
+        })
+
+        // PUT : update all profiles at the same time
+        .put(function (req, res) {
+            req.body.forEach(function (profile) {
+                //Update parent next
+                Profile.findOneAndUpdate(
+                    {_id: profile._id},
+                    {
+                        name: profile.name,
+                        description: profile.description,
+                        active: profile.active,
+                        delay: profile.delay,
+                        unchangeable: profile.unchangeable,
+                        planning: profile.planning
+                    }, function (err) {
+                        if (err)
+                            res.send(err);
+                    });
+            });
+            Profile.find(function (err, profiles) {
+                if (err)
+                    res.send(err);
+                res.json(profiles);
+            });
+
         });
 
 
@@ -67,6 +93,8 @@ module.exports = (function () {
             Profile.findById(req.params.id, function (err, profile) {
                 if (err)
                     res.send(err);
+                console.log(req.params);
+
                 if (req.body.active != undefined) {
                     profile.active = req.body.active;
                 }
@@ -78,6 +106,9 @@ module.exports = (function () {
                 }
                 if (req.body.delay != undefined) {
                     profile.delay = req.body.delay;
+                }
+                if (req.body.unchangeable != undefined) {
+                    profile.unchangeable = req.body.unchangeable;
                 }
 
                 // save
@@ -148,6 +179,7 @@ module.exports = (function () {
 
         });
     }
+
 
     return router;
 })();

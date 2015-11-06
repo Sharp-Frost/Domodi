@@ -6,6 +6,9 @@ var express = require('express');        // call express
 var app = express();                 // define our app using express
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
+
+
+
 // set our port
 var port = process.env.PORT || 8080;
 
@@ -66,3 +69,11 @@ io.on('connection', function (socket) {
 console.log('Node server started on port ' + port);
 http.listen(port);
 module.exports = app;
+
+
+// START THE ADDITIONAL SERVICES
+// ===============
+
+var CronService = require("./app/services/cronService.js");
+var cronService = CronService();
+cronService.start();

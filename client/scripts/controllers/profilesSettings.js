@@ -87,7 +87,6 @@ angular.module('DomodiApp')
 
         // FUNCTIONS
         // ========================================================================
-        $('.clockpicker').clockpicker();
 
         // Return delay from milliSeconds to seconds
         $scope.getDelaySeconds = function (delay) {
@@ -96,17 +95,19 @@ angular.module('DomodiApp')
 
         // Add a schedule to a profile
         $scope.addSchedule = function (profile, day, time) {
-            console.log('Day ' + day + ' time ' + time);
-            if (profile.planning === undefined) {
-                profile.planning = new Array();
-            }
-            //Special case for every days
-            if(day == 0) {
-                for (var i=1; i<=7; i++) {
-                    profile.planning.push({day: i, hours: time.getHours(), minutes: time.getMinutes()});
+            if ((undefined != day) && (undefined != time) && (time instanceof Date))
+            {
+                if (profile.planning === undefined) {
+                    profile.planning = new Array();
                 }
-            } else {
-                profile.planning.push({day: Number(day), hours: time.getHours(), minutes: time.getMinutes()});
+                //Special case for every days
+                if (day == 0) {
+                    for (var i = 1; i <= 7; i++) {
+                        profile.planning.push({day: i, hours: time.getHours(), minutes: time.getMinutes()});
+                    }
+                } else {
+                    profile.planning.push({day: Number(day), hours: time.getHours(), minutes: time.getMinutes()});
+                }
             }
         }
 
@@ -125,4 +126,12 @@ angular.module('DomodiApp')
         $scope.cancel = function () {
             $scope.profiles = angular.copy($scope.originalProfiles);
         }
+
+        //Return a string with leading 0 for int
+        $scope.zeroPadding = function (value) {
+            var n = value.toString();
+            if (n.length < 2) n = '0'+n;
+            return n
+        }
+
     });

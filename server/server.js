@@ -47,21 +47,7 @@ app.use('/domodi', profilesRouter);
 // SOCKET IO
 // =============================================================================
 var http = require('http').Server(app);
-var io = require('socket.io').listen(http);
 
-
-io.on('connection', function (socket) {
-    console.log("a user connected to websocket");
-
-    //Send datetime
-    var date = new Date().toTimeString();
-    socket.emit("date", {msg: date});
-
-
-    socket.on('disconnect', function () {
-        console.log('user disconnected');
-    });
-});
 
 
 // START THE SERVER
@@ -73,6 +59,10 @@ module.exports = app;
 
 // START THE ADDITIONAL SERVICES
 // ===============
+
+var WebSocketService = require("./app/services/webSocketService.js");
+var webSocketService = WebSocketService(http);
+webSocketService.start();
 
 var CronService = require("./app/services/cronService.js");
 var cronService = CronService();

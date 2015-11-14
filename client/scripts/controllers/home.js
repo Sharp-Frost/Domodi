@@ -31,7 +31,7 @@ angular.module('DomodiApp').controller('HomeCtrl', function ($scope, domodiAPIse
 
         //select active profile in radio buttons
         $scope.profiles.forEach(function (profile) {
-            if(profile.active) {
+            if (profile.active) {
                 $scope.profileModel.selected = profile._id;
                 console.log("Selected profile is " + profile.name);
             }
@@ -45,11 +45,14 @@ angular.module('DomodiApp').controller('HomeCtrl', function ($scope, domodiAPIse
     // Connection socket io
     var socket = io.connect('localhost:8080');
 
-    socket.on('date', function(data) {
-        $scope.datetime = data.msg;
-        $scope.$apply(); // AngularJS need to be manually called to refresh the view
+    socket.on('profile.changed', function (profile) {
+        //Change active profile if needed
+        if (profile.active) {
+            $scope.profileModel.selected = profile._id;
+            console.log("Selected profile is " + profile.name);
+            $scope.$apply(); // AngularJS need to be manually called to refresh the view
+        }
     });
-
 
     // Handlers
     // =====================================================================

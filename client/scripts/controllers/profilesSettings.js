@@ -61,14 +61,14 @@ angular.module('DomodiApp')
         $scope.daysOfweek = {
             selected: null,
             availableOptions: [
-                {id: '0', name: 'Days'},
+                {id: '7', name: 'Days'},
                 {id: '1', name: 'Monday'},
                 {id: '2', name: 'Tuesday'},
                 {id: '3', name: 'Wednesday'},
                 {id: '4', name: 'Thursday'},
                 {id: '5', name: 'Friday'},
                 {id: '6', name: 'Saturday'},
-                {id: '7', name: 'Sunday'},
+                {id: '0', name: 'Sunday'},
             ]
         };
 
@@ -101,8 +101,8 @@ angular.module('DomodiApp')
                     profile.planning = new Array();
                 }
                 //Special case for every days
-                if (day == 0) {
-                    for (var i = 1; i <= 7; i++) {
+                if (day == 7) {
+                    for (var i = 0; i < 7; i++) {
                         profile.planning.push({day: i, hours: time.getHours(), minutes: time.getMinutes()});
                     }
                 } else {

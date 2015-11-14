@@ -4,6 +4,9 @@ module.exports = (function () {
     'use strict';
     var router = express.Router();
     var Profile = require('../models/profile');
+    var Postal = require('postal')
+    var channel = Postal.channel();
+
 
     //Define routes here :
     //--------------------------------------------------------------------
@@ -71,6 +74,9 @@ module.exports = (function () {
             Profile.find(function (err, profiles) {
                 if (err)
                     res.send(err);
+
+                // Send message on application bus (postal)
+                channel.publish("profiles.updated", profiles);
                 res.json(profiles);
             });
 
@@ -143,42 +149,17 @@ module.exports = (function () {
                 if (profile.delay != undefined && profile.delay > 0) {
                     console.log("Waiting " + profile.delay + " milliseconds before changing profile");
                     setTimeout(function () {
-                        activate(profile._id).then(function (profile) {
+                        Profile.activate(profile._id).then(function (profile) {
                             res.json(profile);
                         });
                     }, profile.delay); //Delaying activation in milliseconds
                 } else {
-                    activate(profile._id).then(function (profile) {
+                    Profile.activate(profile._id).then(function (profile) {
                         res.json(profile);
                     });
                 }
             });
         });
-
-
-    function activate(id) {
-        // Deactivate all others
-        console.log("Deactivating all other profile");
-        return Profile.find({'active': true}, function (err, profiles) {
-            if (err) {
-                console.log("An error occured");
-            } else {
-                profiles.forEach(function (profile) {
-                    profile.active = false;
-                    profile.save();
-                });
-            }
-        }).then(function () {
-            // Activate profile
-            console.log("Activating profile " + id);
-            Profile.findById(id, function (err, profile) {
-                profile.active = true;
-                profile.save();
-                return profile;
-            });
-
-        });
-    }
 
 
     return router;

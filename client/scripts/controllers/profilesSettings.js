@@ -97,7 +97,7 @@ angular.module('DomodiApp')
         $scope.addSchedule = function (profile, day, time) {
             if ((undefined != day) && (undefined != time) && (time instanceof Date))
             {
-                if (profile.planning === undefined) {
+                if (profile.planning === undefined || profile.planning == null) {
                     profile.planning = new Array();
                 }
                 //Special case for every days
@@ -117,6 +117,7 @@ angular.module('DomodiApp')
                 then(function successCallback(response) {
                     console.log("profiles saved");
                     $scope.originalProfiles = angular.copy(response.data);
+                    $scope.profiles = response.data;
                 }, function errorCallback(response) {
                     console.log("An error occured while getting profiles : " + response);
                 });
@@ -132,6 +133,12 @@ angular.module('DomodiApp')
             var n = value.toString();
             if (n.length < 2) n = '0'+n;
             return n
+        }
+
+        //Add New Profile
+        $scope.addNewProfile = function(name) {
+            $scope.profiles.push({name: name});
+
         }
 
     });

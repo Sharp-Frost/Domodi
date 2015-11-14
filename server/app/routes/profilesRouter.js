@@ -6,6 +6,7 @@ module.exports = (function () {
     var Profile = require('../models/profile');
     var Postal = require('postal')
     var channel = Postal.channel();
+    var mongoose = require('mongoose');
 
 
     //Define routes here :
@@ -56,6 +57,8 @@ module.exports = (function () {
         // PUT : update all profiles at the same time
         .put(function (req, res) {
             req.body.forEach(function (profile) {
+
+                if (! profile._id) { profile._id= new mongoose.mongo.ObjectID()}
                 //Update parent next
                 Profile.findOneAndUpdate(
                     {_id: profile._id},
@@ -66,7 +69,11 @@ module.exports = (function () {
                         delay: profile.delay,
                         unchangeable: profile.unchangeable,
                         planning: profile.planning
-                    }, function (err) {
+                    },
+                    {
+                        upsert: true
+                    },
+                    function (err) {
                         if (err)
                             res.send(err);
                     });

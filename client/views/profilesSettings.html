@@ -105,14 +105,50 @@
     </div>
     <!-- ngMessages goes here -->
 
-    <div class="row">
-            <button type="submit" class="btn btn-warning col-md-offset-3 col-md-2 " ng-click="cancel()" ng-disabled="profilesForm.$invalid">
-                Cancel
-            </button>
-            <button type="submit" class="btn btn-success col-md-offset-2 col-md-2 " ng-click="save()" ng-disabled="profilesForm.$invalid">
-                Save
-            </button>
+
+    <!-- ADDING A NEW PROFILE-->
+    <legend>New profile</legend>
+    <div class="form-group">
+        <div class="form-group">
+            <label class="col-md-2 control-label">Name</label>
+
+            <div class="col-md-10">
+                <div class="form-group row">
+                    <div class="col-md-4">
+                        <input type="text" name="newProfileName"
+                               class="col-md-12"
+                               ng-maxlength="140"
+                               ng-model="newProfileName">
+                <span style="color:red"
+                      ng-show="profilesForm.newProfileName.$touched && profilesForm.newProfileName.$invalid">invalid</span>
+                    </div>
+
+                    <div class="col-md-2">
+                        <button type="button" class="btn-sm btn-success"
+                                ng-click="addNewProfile(newProfileName)">
+                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                            Add
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
     </div>
+
+
+    <div class="row">
+        <button type="submit" class="btn btn-warning col-md-offset-3 col-md-2 " ng-click="cancel()">
+            Cancel
+        </button>
+        <button type="submit" class="btn btn-success col-md-offset-2 col-md-2 " ng-click="save()"
+                ng-disabled="profilesForm.$invalid">
+            Save
+        </button>
+    </div>
+
+
 </form>
 
 

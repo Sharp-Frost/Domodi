@@ -30,5 +30,9 @@ angular.module('DomodiApp.services', []).
             return $http.put(host + '/profiles/', profiles );
         }
 
+        domodiAPI.testPushBullet = function (apiKey) {
+            return $http.post(host + '/notifications/pushbullet/test',apiKey );
+        }
+
         return domodiAPI;
     });

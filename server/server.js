@@ -39,9 +39,11 @@ mongoose.connect('mongodb://localhost:27017/Domodi');
 var api = require('./app/routes/routes');
 var devicesRouter = require('./app/routes/devicesRouter');
 var profilesRouter = require('./app/routes/profilesRouter');
+var notificationsRouter = require('./app/routes/notificationsRouter');
 app.use('/domodi', api);
 app.use('/domodi', devicesRouter);
 app.use('/domodi', profilesRouter);
+app.use('/domodi', notificationsRouter);
 
 
 // SOCKET IO
@@ -67,3 +69,7 @@ webSocketService.start();
 var CronService = require("./app/services/cronService.js");
 var cronService = CronService();
 cronService.start();
+
+var NotificationsServices = require("./app/services/notificationsServices.js");
+var notificationsServices = NotificationsServices();
+notificationsServices.start();

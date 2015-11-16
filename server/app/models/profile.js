@@ -22,13 +22,18 @@ var ProfileSchema = new Schema({
 ProfileSchema.statics.activate = function activate(id) {
     // Deactivate all others
     console.log("Deactivating all other profile");
+
     return this.model('Profile').find({'active': true}, function (err, profiles) {
         if (err) {
             console.log("An error occured");
         } else {
             profiles.forEach(function (profile) {
-                profile.active = false;
-                profile.save();
+                if (profile.unchangeable) {
+                   // throw new Error('unchangeableActiveProfile');   //TODO : profile with unchangeable=true should not be changed automatically
+                } else {
+                    profile.active = false;
+                    profile.save();
+                }
             });
         }
     }).then(function () {
@@ -44,9 +49,7 @@ ProfileSchema.statics.activate = function activate(id) {
             return profile;
         });
     });
-
 };
-
 
 
 module.exports = mongoose.model('Profile', ProfileSchema);

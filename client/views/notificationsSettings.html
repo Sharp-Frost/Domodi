@@ -1,0 +1,44 @@
+<h3>Notifications settings</h3>
+<form name="notificationsForm" class="form-horizontal" role="form" novalidate>
+
+    <legend>Pushbullet</legend>
+    <div class="col-md-12">
+        <div class="form-group row">
+            <label for="pushbulletApiKeyInput" class="col-md-3 control-label">API key</label>
+
+            <div class="col-md-6">
+                <input type="text" id="pushbulletApiKeyInput"
+                       class="col-md-12"
+                       ng-maxlength="140"
+                       ng-model="pushbullet.apiKey">
+                <span style="color:red"
+                      ng-show="true">{{pushbullet.err}}</span>
+            </div>
+
+
+            <div class="col-md-3">
+                <button type="button" class="btn-sm btn-success"
+                        ng-click="testPushBullet(pushbullet.apiKey)">
+                    <span class="glyphicon glyphicon-send" aria-hidden="true"></span>
+                    Test
+                </button>
+            </div>
+
+
+
+
+        </div>
+    </div>
+
+
+    <div class="row">
+        <button type="submit" class="btn btn-warning col-md-offset-3 col-md-2 " ng-click="cancel()">
+            Cancel
+        </button>
+        <button type="submit" class="btn btn-success col-md-offset-2 col-md-2 " ng-click="save()"
+                ng-disabled="profilesForm.$invalid">
+            Save
+        </button>
+    </div>
+
+</form>

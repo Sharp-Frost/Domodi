@@ -2,7 +2,7 @@ var Postal = require('postal')
 var channel = Postal.channel();
 var subscriptions = [];
 var PushBullet = require('pushbullet');
-var pusher = new PushBullet('v1SGKIMwGa0CXP9o4ujkZZh1MeMF4OhRmWujzesR0mcLc');
+var pusher = new PushBullet('you api key');
 
 
 module.exports = function () {
@@ -10,7 +10,16 @@ module.exports = function () {
 
         start: function () {
             console.log('Starting Notification service');
-            //TODO : initialise notification services here
+            //TODO : retrieve pushbullet API Key from DB
+
+            //TODO : Update pusher when apiKey has been modified by client
+
+            //Subscribing to postal messages to listen to
+            subscriptions.push(channel.subscribe('profile.changed', function (profile) {
+                pusher.note('', 'Domodi notification', "Profile " + profile.name +" updated", function(error, response) {
+                    //DO nothing ?
+                } );
+            }));
 
 
         },

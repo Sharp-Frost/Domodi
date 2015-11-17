@@ -34,5 +34,15 @@ angular.module('DomodiApp.services', []).
             return $http.post(host + '/notifications/pushbullet/test',apiKey );
         }
 
+        /** Notification **/
+        domodiAPI.updateNotifiers = function(notifiers) {
+            return $http.put(host + '/notifications/', notifiers );
+        }
+
+        domodiAPI.getNotifiers = function() {
+            return $http.get(host + '/notifications', '');
+        }
+
+
         return domodiAPI;
     });

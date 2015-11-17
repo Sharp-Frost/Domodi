@@ -61,16 +61,19 @@ angular.module('DomodiApp')
         $scope.daysOfweek = {
             selected: null,
             availableOptions: [
-                {id: '7', name: 'Days'},
+                {id: '0', name: 'Sunday'},
                 {id: '1', name: 'Monday'},
                 {id: '2', name: 'Tuesday'},
                 {id: '3', name: 'Wednesday'},
                 {id: '4', name: 'Thursday'},
                 {id: '5', name: 'Friday'},
                 {id: '6', name: 'Saturday'},
-                {id: '0', name: 'Sunday'},
+                {id: '7', name: 'Days'},
             ]
         };
+
+        $scope.alerts = []; // Push error like : {type: 'danger', msg: 'An error occured while saving modifications', timeout: 5000}
+
 
 
         // INIT
@@ -82,11 +85,21 @@ angular.module('DomodiApp')
             $scope.originalProfiles = angular.copy(response.data);
         }, function errorCallback(response) {
             $scope.errors = "An error occured while getting profiles : " + response;
+
+            $scope.alerts.push({
+                type: 'danger',
+                msg: 'An error occured while getting profiles' ,
+                timeout: 5000
+            });
         });
 
 
         // FUNCTIONS
         // ========================================================================
+
+        $scope.closeAlert = function (index) {
+            $scope.alerts.splice(index, 1);
+        };
 
         // Return delay from milliSeconds to seconds
         $scope.getDelaySeconds = function (delay) {
@@ -115,11 +128,22 @@ angular.module('DomodiApp')
         $scope.save = function () {
             domodiAPIservice.updateProfiles($scope.profiles).
                 then(function successCallback(response) {
-                    console.log("profiles saved");
                     $scope.originalProfiles = angular.copy(response.data);
                     $scope.profiles = response.data;
+
+                    $scope.alerts.push({
+                        type: 'success',
+                        msg: 'Modifications saved' ,
+                        timeout: 5000
+                    });
+
                 }, function errorCallback(response) {
-                    console.log("An error occured while getting profiles : " + response);
+                    $scope.alerts.push({
+                        type: 'danger',
+                        msg: 'An error occured while saving modifications' ,
+                        timeout: 5000
+                    });
+
                 });
         }
 

@@ -147,6 +147,10 @@
         </button>
     </div>
 
+    <div class="row">
+        <uib-alert ng-repeat="alert in alerts" type="{{alert.type}}"  dismiss-on-timeout="{{alert.timeout}}" close="closeAlert($index)">{{alert.msg}}</uib-alert>
+    </div>
+
 
 </form>
 

@@ -1,45 +1,60 @@
 var Postal = require('postal')
+var PushBullet = require('pushbullet');
+var Notifier = require('../models/notifier');
+
 var channel = Postal.channel();
 var subscriptions = [];
-var PushBullet = require('pushbullet');
-var pusher = new PushBullet('you api key');
-
+var pusher;
 
 module.exports = function () {
     return {
 
         start: function () {
             console.log('Starting Notification service');
-            //TODO : retrieve pushbullet API Key from DB
 
-            //TODO : Update pusher when apiKey has been modified by client
+            //Retrieve pushbullet API Key from DB
+            createPusher();
 
-            //Subscribing to postal messages to listen to
-            subscriptions.push(channel.subscribe('profile.changed', function (profile) {
-                pusher.note('', 'Domodi notification', "Profile " + profile.name +" updated", function(error, response) {
-                    //DO nothing ?
-                } );
+            //POSTAL SUBSCRIPTIONS
+            //==========================================================================
+            subscriptions.push(channel.subscribe('profile.updated', function (profile) {
+                if (pusher) {
+                    pusher.note('', 'Domodi notification', "Profile " + profile.name + " updated", function (error, response) {
+                        //DO nothing ?
+                    });
+                }
             }));
 
+            subscriptions.push(channel.subscribe('notifiers.updated', function (notifiers) {
+                createPusher();
+            }));
 
         },
 
+
         /**
-         *
+         * Test pushbullet service with given api key
          * @param {String}  api Key.
          * @param {Function} callback     Callback for when request is complete.
          */
         testPushBullet: function (key, callback) {
             var pusher = new PushBullet(key);
-            var result = {error: '', response :''};
-            pusher.note('', 'Domodi notification', "You're API key is valid", callback );
+            pusher.note('', 'Domodi notification', "You're API key is valid", callback);
         }
-
-
     }
-
 }
 
-function pushBulletResponse(err, response ) {
-    console.log('Pushbullet response  : ' + err + ' response : ' + response );
-    }
+
+/**
+ * Create a pusher for pushbullet if it is active
+ */
+function createPusher() {
+    pusher = null; //reset pusher
+
+    //Search active pushbullet notifier in DB
+    Notifier.findOne({name: 'pushbullet', active: true}, function (err, pushbulletNotifier) {
+        if (pushbulletNotifier) {
+            pusher = new PushBullet(pushbulletNotifier.apiKey);
+        }
+    });
+}

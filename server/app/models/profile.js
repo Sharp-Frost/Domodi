@@ -29,7 +29,7 @@ ProfileSchema.statics.activate = function activate(id) {
         } else {
             profiles.forEach(function (profile) {
                 if (profile.unchangeable) {
-                   // throw new Error('unchangeableActiveProfile');   //TODO : profile with unchangeable=true should not be changed automatically
+                    // throw new Error('unchangeableActiveProfile');   //TODO : profile with unchangeable=true should not be changed automatically
                 } else {
                     profile.active = false;
                     profile.save();
@@ -44,7 +44,7 @@ ProfileSchema.statics.activate = function activate(id) {
             profile.save();
 
             //Send postal notification
-            channel.publish("profile.changed", profile);
+            channel.publish("profile.updated", profile);
 
             return profile;
         });

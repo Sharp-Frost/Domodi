@@ -45,7 +45,7 @@ angular.module('DomodiApp').controller('HomeCtrl', function ($scope, domodiAPIse
     // Connection socket io
     var socket = io.connect('localhost:8080');
 
-    socket.on('profile.changed', function (profile) {
+    socket.on('profile.updated', function (profile) {
         //Change active profile if needed
         if (profile.active) {
             $scope.profileModel.selected = profile._id;

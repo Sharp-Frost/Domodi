@@ -10,6 +10,8 @@
     <uib-alert ng-repeat="alert in serverAlerts.slice(((alertsCurrentPage-1)*alertsItemPerPage), ((alertsCurrentPage)*alertsItemPerPage)) | orderBy: 'date':true " type="{{alert.type}}"  close="closeAlert($index)"><b>{{formatDate(alert.date)}} :</b> {{alert.message}}</uib-alert>
 
     <div class="row">
+        <uib-pagination total-items="serverAlerts.length" ng-model="alertsCurrentPage" items-per-page="alertsItemPerPage" max-size="5" ng-hide="serverAlerts.length == 0" class="pagination-sm" boundary-links="false"></uib-pagination>
+
         <button type="button" ng-click="closeAllAlerts()" class="btn btn-default pull-right" ng-hide="serverAlerts.length == 0" aria-label="Left Align">
             <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
             Remove all
@@ -17,7 +19,6 @@
 
     </div>
 
-    <uib-pagination total-items="serverAlerts.length" ng-model="alertsCurrentPage" items-per-page="alertsItemPerPage" max-size="5" ng-hide="serverAlerts.length == 0" class="pagination-sm" boundary-links="false"></uib-pagination>
 
 </div>
 

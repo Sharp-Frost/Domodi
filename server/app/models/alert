@@ -1,0 +1,11 @@
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
+
+
+var AlertSchema = new Schema({
+    type: { type: String, required: true, enum: ['info', 'success', 'danger', 'warning']},
+    message:{ type: String, required: true},
+    date: { type: Date, required: true, default: Date.now }
+});
+
+module.exports = mongoose.model('Alert', AlertSchema);

@@ -40,10 +40,12 @@ var api = require('./app/routes/routes');
 var devicesRouter = require('./app/routes/devicesRouter');
 var profilesRouter = require('./app/routes/profilesRouter');
 var notificationsRouter = require('./app/routes/notificationsRouter');
+var alertsRouter = require('./app/routes/AlertsRouter');
 app.use('/domodi', api);
 app.use('/domodi', devicesRouter);
 app.use('/domodi', profilesRouter);
 app.use('/domodi', notificationsRouter);
+app.use('/domodi', alertsRouter);
 
 
 // SOCKET IO

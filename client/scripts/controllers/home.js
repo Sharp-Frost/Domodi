@@ -8,15 +8,39 @@
  * Controller of the Home page of Domodi
  */
 angular.module('DomodiApp').controller('HomeCtrl', function ($scope, domodiAPIservice) {
+
+    // VARIABLES
+    // =====================================================================
     $scope.profileModel = {selected: ""};
     $scope.datetime = "date";
+    $scope.serverAlerts = [];
+    $scope.alertsItemPerPage =  5;
+    $scope.alertsCurrentPage = 1;
 
+
+
+
+
+    // INIT
+    // ======================================================================
     // Retrieve Hello message
     domodiAPIservice.getHello().then(function successCallback(response) {
         $scope.nodeHello = response.data.message;
     }, function errorCallback(response) {
         $scope.nodeHello = "An error occured while getting alive message : " + response;
     });
+
+
+    //Retrieve alerts
+    domodiAPIservice.getAlerts().then(function successCallback(response) {
+       $scope.serverAlerts = response.data;
+    }, function errorCallback(response) {
+        $scope.alerts.push({
+            type: 'danger',
+            msg: 'Unable to get alerts'
+        });
+    });
+
 
     // Retrieve devices list
     domodiAPIservice.getDevices().then(function successCallback(response) {
@@ -54,7 +78,15 @@ angular.module('DomodiApp').controller('HomeCtrl', function ($scope, domodiAPIse
         }
     });
 
-    // Handlers
+    socket.on('alerts.updated', function (alerts) {
+        //Change active profile if needed
+        $scope.serverAlerts = angular.copy(alerts);
+        $scope.$apply(); // AngularJS need to be manually called to refresh the view
+    });
+
+
+
+    // Functions
     // =====================================================================
 
     $scope.changeProfile = function () {
@@ -69,6 +101,34 @@ angular.module('DomodiApp').controller('HomeCtrl', function ($scope, domodiAPIse
             $scope.errors = "An error occured while getting profiles : " + response;
         })
     };
+
+    $scope.closeAlert = function (index) {
+        var alertToClose = $scope.serverAlerts[index];
+        domodiAPIservice.deleteAlert(alertToClose._id).then(function successCallback(response) {
+            $scope.serverAlerts.splice(index, 1);
+        }, function errorCallback(response) {
+
+        });
+    };
+
+    $scope.formatDate = function(date) {
+        return moment(date).format('Do MMMM  HH:mm ');
+    }
+
+
+    //Alerts pagination
+    $scope.setPage = function (pageNo) {
+        $scope.alertsCurrentPage = pageNo;
+    };
+
+    $scope.closeAllAlerts = function() {
+        domodiAPIservice.deleteAllAlert().then(function successCallback(response) {
+            $scope.serverAlerts=[];
+        }, function errorCallback(response) {
+
+        });
+    }
+
 
 
 });

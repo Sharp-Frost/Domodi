@@ -1,15 +1,24 @@
-<div class="jumbotron">
-    <h1>Domodi </h1>
-
-    <p>Domodi is a home automation system for Z-wave Devices. It relies on AngularJS, NodeJS and MongoDB.</p>
-
+<div class="page-header">
+    <h1>Domodi <small>Home automation system for Z-wave Devices. It relies on AngularJS, NodeJS and MongoDB.</small></h1>
     <p>{{nodeHello}}</p>
-
 </div>
 
+
 <div>
-    <h2>Alerts <span class="badge">42</span></h2>
+    <h2>Alerts <span class="badge">{{serverAlerts.length}}</span></h2>
     <p>Display alerts raised by the system</p>
+    <uib-alert ng-repeat="alert in serverAlerts.slice(((alertsCurrentPage-1)*alertsItemPerPage), ((alertsCurrentPage)*alertsItemPerPage)) | orderBy: 'date':true " type="{{alert.type}}"  close="closeAlert($index)"><b>{{formatDate(alert.date)}} :</b> {{alert.message}}</uib-alert>
+
+    <div class="row">
+        <button type="button" ng-click="closeAllAlerts()" class="btn btn-default pull-right" ng-hide="serverAlerts.length == 0" aria-label="Left Align">
+            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+            Remove all
+        </button>
+
+    </div>
+
+    <uib-pagination total-items="serverAlerts.length" ng-model="alertsCurrentPage" items-per-page="alertsItemPerPage" max-size="5" ng-hide="serverAlerts.length == 0" class="pagination-sm" boundary-links="false"></uib-pagination>
+
 </div>
 
 

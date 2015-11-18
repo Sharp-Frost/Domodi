@@ -71,7 +71,8 @@ module.exports = (function () {
                         planning: profile.planning
                     },
                     {
-                        upsert: true
+                        upsert: true,
+                        runValidators: true
                     },
                     function (err) {
                         if (err)

@@ -63,7 +63,8 @@ module.exports = (function () {
                         active: notifier.active
                     },
                     {
-                        upsert: true
+                        upsert: true,
+                        runValidators: true
                     },
                     function (err) {
                         if (err)

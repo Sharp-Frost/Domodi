@@ -29,6 +29,12 @@ module.exports = function (http) {
                 mySocket.emit("profile.updated", data); //TODO : optimisation can be done here by sending only relevant informations
                 console.log('pushing profile.updated to web client with data :' + data);
             });
+
+            subscription = channel.subscribe('alerts.updated', function (data) {
+                mySocket.emit("alerts.updated", data); //TODO : optimisation can be done here by sending only relevant informations
+            });
+
+
         }
     };
 }

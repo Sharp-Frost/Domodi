@@ -43,6 +43,17 @@ angular.module('DomodiApp.services', []).
             return $http.get(host + '/notifications', '');
         }
 
+        domodiAPI.getAlerts = function() {
+            return $http.get(host + '/alerts', '');
+        }
+
+        domodiAPI.deleteAlert = function(id) {
+            return $http.delete(host + '/alerts/' + id);
+        }
+
+        domodiAPI.deleteAllAlert = function() {
+            return $http.delete(host + '/alerts/');
+        }
 
         return domodiAPI;
     });

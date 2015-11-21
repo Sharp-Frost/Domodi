@@ -6,9 +6,10 @@
 
 angular.module('DomodiApp.services', []).
 
-    factory('domodiAPIservice', function ($http) {
+    factory('domodiAPIservice', function ($http, $location) {
         var domodiAPI = {};
-        var host = 'http://localhost:8080/domodi';
+        var serverPort = '8080';
+        var host = 'http://' + $location.host() +':'+serverPort+ '/domodi';
 
         domodiAPI.getHello = function () {
             return $http.get(host + '/', '');

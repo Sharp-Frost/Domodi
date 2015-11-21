@@ -31,3 +31,20 @@ AngularJS, Bootstrap, Grunt, Bower, NodeJS, Express, MongoDB...
                                      ,.-' >.'
                                     <.'_.''
                                       <'
+
+Installation :
+Prerequisite :
+- Install : Git, NodeJS, MongoDB, NPM, Bower (globally) , Grunt-cli (globally)
+
+Installation
+- Git clone repo
+- In client directory :
+    npm install
+    bower install
+- In server directory :
+    npm install
+
+Run :
+- Start MongoDB
+- Start NodeJs server : Server/server.js
+- Start Client : grunt

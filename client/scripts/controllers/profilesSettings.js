@@ -8,6 +8,8 @@ angular.module('DomodiApp')
     .controller('ProfilesSettingsCtrl', function ($scope, domodiAPIservice) {
         // VARIABLES
         // =====================================================================
+        $scope.profiles = [];
+        $scope.originalProfiles = [];
 
         $scope.daysOfweek = {
             selected: null,
